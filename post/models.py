@@ -5,7 +5,7 @@ from django.urls import reverse
 
 class Tag(models.Model):
     title = models.CharField(max_length=100, verbose_name='Название')
-    slug = models.SlugField(verbose_name='слаг')
+    slug = models.SlugField(verbose_name='слаг', unique=True)
 
     def __str__(self):
         return self.title
@@ -17,7 +17,7 @@ class Tag(models.Model):
 
 class Category(models.Model):
     title = models.CharField(max_length=150, verbose_name='Название')
-    slug = models.SlugField(verbose_name='Слаг')
+    slug = models.SlugField(verbose_name='Слаг', unique=True)
 
     def __str__(self):
         return self.title
@@ -38,7 +38,7 @@ class Post(models.Model):
                                related_name='posts')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='Категория', related_name='posts')
     tags = models.ManyToManyField(Tag, verbose_name='Теги')
-    slug = models.SlugField(verbose_name='Слаг')
+    slug = models.SlugField(verbose_name='Слаг', unique=True)
     views = models.PositiveIntegerField(default=0, verbose_name='Количество просмотров')
     photo = models.ImageField(upload_to='posts/%Y/%m/%d/', verbose_name='Фото', null=True, blank=True)
 
